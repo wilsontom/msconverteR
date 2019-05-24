@@ -1,7 +1,19 @@
 #' Covert Files
 #'
-#' @param files
-#' @param args
+#' Convert vendor specific mass spectrometry files to the open `.mzML` format. This functions makes a `system` call to `docker` in order to convert files.
+#' Conversion arguments should be supplied to the `args` parameter exactly as they would be for `msconvert` but omitting the `--filter` prefix.
+#'
+#' For example to convert a file with vendor specific centroiding only;
+#'
+#' `convert_files(rawFiels, args = 'peakPicking true1-')`
+#'
+#' To only retain positive mode data;
+#'
+#' `convert_files(rawFiels, args = c('peakPicking true1-', 'polarity positive'))`
+#'
+#'
+#' @param files the absolute filepath vendor specific files to be converted
+#' @param args a character vector of `msconvert` arguments.
 #' @export
 
 
