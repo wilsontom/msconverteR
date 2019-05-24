@@ -1,4 +1,6 @@
-#' Get Proteowizard (pwiz) Container
+#' Get Proteowizard (pwiz) Docker Container
+#'
+#' Pull the pwiz docker container (`chambm/pwiz-skyline-i-agree-to-the-vendor-licenses:latest`) from Docker Hub.
 #'
 #' @export
 
@@ -26,7 +28,7 @@ get_pwiz_container <- function()
       )
     )
 
-    docker$image$pull('chambm/pwiz-skyline-i-agree-to-the-vendor-licenses')
+    docker_env$image$pull('chambm/pwiz-skyline-i-agree-to-the-vendor-licenses')
 
   }
 
