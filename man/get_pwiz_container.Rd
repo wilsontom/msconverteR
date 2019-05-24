@@ -2,10 +2,10 @@
 % Please edit documentation in R/get_pwiz_container.R
 \name{get_pwiz_container}
 \alias{get_pwiz_container}
-\title{Get Proteowizard (pwiz) Container}
+\title{Get Proteowizard (pwiz) Docker Container}
 \usage{
 get_pwiz_container()
 }
 \description{
-Get Proteowizard (pwiz) Container
+Pull the pwiz docker container (\code{chambm/pwiz-skyline-i-agree-to-the-vendor-licenses:latest}) from Docker Hub.
 }

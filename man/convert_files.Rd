@@ -6,6 +6,21 @@
 \usage{
 convert_files(files, args = c("peakPicking true1-", "polarity positive"))
 }
+\arguments{
+\item{files}{the absolute filepath vendor specific files to be converted}
+
+\item{args}{a character vector of \code{msconvert} arguments.}
+}
 \description{
-Covert Files
+Convert vendor specific mass spectrometry files to the open \code{.mzML} format. This functions makes a \code{system} call to \code{docker} in order to convert files.
+Conversion arguments should be supplied to the \code{args} parameter exactly as they would be for \code{msconvert} but omitting the \code{--filter} prefix.
+}
+\details{
+For example to convert a file with vendor specific centroiding only;
+
+\code{convert_files(rawFiels, args = 'peakPicking true1-')}
+
+To only retain positive mode data;
+
+\code{convert_files(rawFiels, args = c('peakPicking true1-', 'polarity positive'))}
 }
