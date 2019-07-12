@@ -26,7 +26,7 @@ All file conversions are performed by the `convert_files` function. Conversion p
 ```
 > rawfile <- 'inst/QC01.raw'
 
-> convertFiles(rawfiles, outpath, args = 'peakPickingtrue1-')
+> convertFiles(rawfiles, outpath =  NULL, args = 'peakPickingtrue1-')
 
 format: mzML 
     m/z: Compression-None, 64-bit
