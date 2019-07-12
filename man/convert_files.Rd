@@ -4,10 +4,13 @@
 \alias{convert_files}
 \title{Covert Files}
 \usage{
-convert_files(files, args = c("peakPicking true1-", "polarity positive"))
+convert_files(files, outpath = NULL, args = c("peakPicking true1-",
+  "polarity positive"))
 }
 \arguments{
 \item{files}{the absolute filepath vendor specific files to be converted}
+
+\item{outpath}{an optional filepath where \code{.mzML} files will be saved to. If \code{NULL} then \code{.mzML} files are saved to the same location as input files.}
 
 \item{args}{a character vector of \code{msconvert} arguments.}
 }
@@ -18,9 +21,9 @@ Conversion arguments should be supplied to the \code{args} parameter exactly as 
 \details{
 For example to convert a file with vendor specific centroiding only;
 
-\code{convert_files(rawFiels, args = 'peakPicking true1-')}
+\code{convert_files(rawFiles, outpath = NULL, args = 'peakPicking true1-')}
 
 To only retain positive mode data;
 
-\code{convert_files(rawFiels, args = c('peakPicking true1-', 'polarity positive'))}
+\code{convert_files(rawFiles, outpath = NULL, args = c('peakPicking true1-', 'polarity positive'))}
 }
