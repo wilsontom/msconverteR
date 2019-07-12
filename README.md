@@ -21,12 +21,35 @@ library(msconverteR)
 get_pwiz_container()
 ```
 
-All file conversions are performed by the `convert_files` function. Conversion parameters are passed to the the `args` parameter in the same way as they would be for `msconvert` expect that the `--filter` prefix is omitted. 
+All file conversions are performed by the `convert_files` function. Conversion parameters are passed to the the `args` parameter in the same way as they would be for `msconvert` except that the `--filter` prefix is omitted. 
 
 ```
-rawfile <- 'inst/QC01.raw'
+> rawfile <- 'inst/QC01.raw'
 
-convertFiles(rawfiles, outpath, args = 'peakPickingtrue1-')
+> convertFiles(rawfiles, outpath, args = 'peakPickingtrue1-')
+
+format: mzML 
+    m/z: Compression-None, 64-bit
+    intensity: Compression-None, 32-bit
+    rt: Compression-None, 64-bit
+ByteOrder_LittleEndian
+ indexed="true"
+outputPath: .
+extension: .mzML
+contactFilename: 
+runIndexSet: 
+
+spectrum list filters:
+  peakPicking true1-
+  
+chromatogram list filters:
+  
+filenames:
+  QC01.raw
+  
+processing file: QC01.raw
+calculating source file checksums
+writing output file: .\QC1.mzML
 ```
 
 
