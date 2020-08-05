@@ -4,8 +4,11 @@
 \alias{convert_files}
 \title{Covert Files}
 \usage{
-convert_files(files, outpath = NULL, args = c("peakPicking true1-",
-  "polarity positive"))
+convert_files(
+  files,
+  outpath = NULL,
+  args = c("peakPicking true1-", "polarity positive")
+)
 }
 \arguments{
 \item{files}{the absolute filepath vendor specific files to be converted}
