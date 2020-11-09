@@ -24,7 +24,7 @@ get_pwiz_container()
 All file conversions are performed by the `convert_files` function. Conversion parameters are passed to the the `args` parameter in the same way as they would be for `msconvert` except that the `--filter` prefix is omitted. 
 
 ```
-> rawfile <- 'inst/QC01.raw'
+> rawfile <- system.file('QC01.raw',package = 'msconverteR')
 
 > convert_files(rawfiles, outpath =  NULL, args = 'peakPicking true 1-')
 
