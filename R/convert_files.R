@@ -43,10 +43,14 @@ convert_files <-
         'chambm/pwiz-skyline-i-agree-to-the-vendor-licenses wine msconvert '
       )
 
-    command_args <- list()
-    for (i in seq_along(args)) {
-      command_args[[i]] <- paste0('--filter ', '"', args[i], '"')
+    if (nchar(args) > 0){
+      command_args <- lapply(args,function(x){
+        paste0('--filter ', '"', x, '"')
+      })
+    } else {
+      command_args <- list()
     }
+
 
     command_args <-
       paste0(' --mzML ', do.call('paste', command_args))
