@@ -28,7 +28,7 @@ convert_files <-
     if (is.null(outpath)) {
       mount_out <- mount_point
     } else{
-      mount_out <- outpath
+      mount_out <- normalizePath(outpath)
     }
 
 
