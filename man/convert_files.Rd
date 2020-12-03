@@ -7,7 +7,8 @@
 convert_files(
   files,
   outpath = NULL,
-  args = c("peakPicking true1-", "polarity positive")
+  msconvert_args = c("peakPicking true1-", "polarity positive"),
+  docker_args = c()
 )
 }
 \arguments{
@@ -15,7 +16,9 @@ convert_files(
 
 \item{outpath}{an optional filepath where \code{.mzML} files will be saved to. If \code{NULL} then \code{.mzML} files are saved to the same location as input files.}
 
-\item{args}{a character vector of \code{msconvert} arguments.}
+\item{msconvert_args}{a character vector of arguments to pass to \code{msconvert}.}
+
+\item{docker_args}{additional arguments to pass to \verb{docker run}}
 }
 \description{
 Convert vendor specific mass spectrometry files to the open \code{.mzML} format. This functions makes a \code{system} call to \code{docker} in order to convert files.
