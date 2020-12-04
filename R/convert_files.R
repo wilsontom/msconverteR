@@ -14,16 +14,21 @@
 #'
 #' @param files the absolute filepath vendor specific files to be converted
 #' @param outpath an optional filepath where `.mzML` files will be saved to. If `NULL` then `.mzML` files are saved to the same location as input files.
-#' @param args a character vector of `msconvert` arguments.
+#' @param msconvert_args a character vector of arguments to pass to `msconvert`.
+#' @param docker_args additional arguments to pass to `docker run`
 #' @export
 
 convert_files <-
   function(files,
            outpath = NULL,
-           args = c('peakPicking true1-', 'polarity positive'))
+           msconvert_args = c('peakPicking true1-', 'polarity positive'),
+           docker_args = c())
   {
-    mount_point <-
-      stringr::str_remove(files[1], paste0('/', basename(files[1])))
+    mount_point <- stringr::str_remove(files[1],
+                                       paste0('/',
+                                              basename(files[1])))
+
+    mount_point <- normalizePath(mount_point)
 
     if (is.null(outpath)) {
       mount_out <- mount_point
@@ -31,10 +36,12 @@ convert_files <-
       mount_out <- normalizePath(outpath)
     }
 
+    docker_args <- paste(docker_args,collapse = ' ')
+    docker_run <- paste('docker run --rm -e WINEDEBUG=-all',docker_args,'-v ')
 
     DOCKER_CMD_A <-
       paste0(
-        'docker run --rm -e WINEDEBUG=-all -v ',
+        docker_run,
         mount_point,
         ':/data',
         ' -v ',
@@ -43,8 +50,8 @@ convert_files <-
         'chambm/pwiz-skyline-i-agree-to-the-vendor-licenses wine msconvert '
       )
 
-    if (nchar(args) > 0){
-      command_args <- lapply(args,function(x){
+    if (nchar(msconvert_args) > 0){
+      command_args <- lapply(msconvert_args,function(x){
         paste0('--filter ', '"', x, '"')
       })
     } else {
