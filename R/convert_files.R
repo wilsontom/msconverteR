@@ -5,11 +5,11 @@
 #'
 #' For example to convert a file with vendor specific centroiding only;
 #'
-#' `convert_files(rawFiles, outpath = NULL, args = 'peakPicking true1-')`
+#' `convert_files(rawFiles, outpath = NULL, args = 'peakPicking true 1-')`
 #'
 #' To only retain positive mode data;
 #'
-#' `convert_files(rawFiles, outpath = NULL, args = c('peakPicking true1-', 'polarity positive'))`
+#' `convert_files(rawFiles, outpath = NULL, args = c('peakPicking true 1-', 'polarity positive'))`
 #'
 #'
 #' @param files the absolute filepath vendor specific files to be converted
@@ -21,7 +21,7 @@
 convert_files <-
   function(files,
            outpath = NULL,
-           msconvert_args = c('peakPicking true1-', 'polarity positive'),
+           msconvert_args = c('peakPicking true 1-'),
            docker_args = c())
   {
     mount_point <- stringr::str_remove(files[1],
@@ -36,8 +36,9 @@ convert_files <-
       mount_out <- normalizePath(outpath)
     }
 
-    docker_args <- paste(docker_args,collapse = ' ')
-    docker_run <- paste('docker run --rm -e WINEDEBUG=-all',docker_args,'-v ')
+    docker_args <- paste(docker_args, collapse = ' ')
+    docker_run <-
+      paste('docker run --rm -e WINEDEBUG=-all', docker_args, '-v ')
 
     DOCKER_CMD_A <-
       paste0(
@@ -50,8 +51,25 @@ convert_files <-
         'chambm/pwiz-skyline-i-agree-to-the-vendor-licenses wine msconvert '
       )
 
-    if (nchar(msconvert_args) > 0){
-      command_args <- lapply(msconvert_args,function(x){
+    if (length(msconvert_args) > 0) {
+
+      ArgumentDictionary <- c(
+        'peakPicking true 1-',
+        'polarity positive',
+        'polarity negative',
+        'msLevel 1',
+        'msLevel 2',
+        'msLevel 3'
+      )
+
+      DictMat <- match(msconvert_args, ArgumentDictionary)
+
+      if (any(is.na(DictMat)) == TRUE) {
+        stop('Invalid msconvert arguments. Check documentation and try again',
+             call. = FALSE)
+      }
+
+      command_args <- lapply(msconvert_args, function(x) {
         paste0('--filter ', '"', x, '"')
       })
     } else {
