@@ -20,12 +20,12 @@ library(msconverteR)
 get_pwiz_container()
 ```
 
-All file conversions are performed by the `convert_files` function. Conversion parameters are passed to the the `args` parameter in the same way as they would be for `msconvert` except that the `--filter` prefix is omitted. 
+All file conversions are performed by the `convert_files` function. Conversion parameters are passed to the the `msconvert_args` parameter in the same way as they would be for `msconvert` except that the `--filter` prefix is omitted. 
 
 ```
 > rawfile <- system.file('QC01.raw',package = 'msconverteR')
 
-> convert_files(rawfile, outpath =  NULL, args = 'peakPicking true 1-')
+> convert_files(rawfile, outpath =  NULL, msconvert_args = 'peakPicking true 1-', docker_args = c())
 
 format: mzML 
     m/z: Compression-None, 64-bit
@@ -39,7 +39,7 @@ contactFilename:
 runIndexSet: 
 
 spectrum list filters:
-  peakPicking true1-
+  peakPicking true 1-
   
 chromatogram list filters:
   
