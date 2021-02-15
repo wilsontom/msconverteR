@@ -7,7 +7,7 @@
 convert_files(
   files,
   outpath = NULL,
-  msconvert_args = c("peakPicking true1-", "polarity positive"),
+  msconvert_args = c("peakPicking true 1-"),
   docker_args = c()
 )
 }
@@ -27,9 +27,9 @@ Conversion arguments should be supplied to the \code{args} parameter exactly as 
 \details{
 For example to convert a file with vendor specific centroiding only;
 
-\code{convert_files(rawFiles, outpath = NULL, args = 'peakPicking true1-')}
+\code{convert_files(rawFiles, outpath = NULL, args = 'peakPicking true 1-')}
 
 To only retain positive mode data;
 
-\code{convert_files(rawFiles, outpath = NULL, args = c('peakPicking true1-', 'polarity positive'))}
+\code{convert_files(rawFiles, outpath = NULL, args = c('peakPicking true 1-', 'polarity positive'))}
 }
