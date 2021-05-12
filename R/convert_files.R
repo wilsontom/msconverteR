@@ -21,7 +21,7 @@
 convert_files <-
   function(files,
            outpath = NULL,
-           msconvert_args = c('peakPicking true 1-'),
+           msconvert_args = c(),
            docker_args = c())
   {
     mount_point <- stringr::str_remove(files[1],
@@ -40,6 +40,7 @@ convert_files <-
     docker_run <-
       paste('docker run --rm -e WINEDEBUG=-all', docker_args, '-v ')
 
+
     DOCKER_CMD_A <-
       paste0(
         docker_run,
@@ -52,7 +53,6 @@ convert_files <-
       )
 
     if (length(msconvert_args) > 0) {
-
       ArgumentDictionary <- c(
         'peakPicking true 1-',
         'polarity positive',
@@ -60,6 +60,7 @@ convert_files <-
         'msLevel 1',
         'msLevel 2',
         'msLevel 3'
+
       )
 
       DictMat <- match(msconvert_args, ArgumentDictionary)
@@ -78,7 +79,7 @@ convert_files <-
 
 
     command_args <-
-      paste0(' --mzML ', do.call('paste', command_args))
+      paste0(' --ignoreUnknownInstrumentError  --mzML ', do.call('paste', command_args))
 
     if (is.null(outpath)) {
       for (i in seq_along(files)) {
