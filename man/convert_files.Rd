@@ -4,12 +4,7 @@
 \alias{convert_files}
 \title{Covert Files}
 \usage{
-convert_files(
-  files,
-  outpath = NULL,
-  msconvert_args = c("peakPicking true 1-"),
-  docker_args = c()
-)
+convert_files(files, outpath = NULL, msconvert_args = c(), docker_args = c())
 }
 \arguments{
 \item{files}{the absolute filepath vendor specific files to be converted}
@@ -27,9 +22,9 @@ Conversion arguments should be supplied to the \code{args} parameter exactly as 
 \details{
 For example to convert a file with vendor specific centroiding only;
 
-\code{convert_files(rawFiles, outpath = NULL, args = 'peakPicking true 1-')}
+\code{convert_files(rawFiles, outpath = NULL, msconvert_args = 'peakPicking true 1-')}
 
 To only retain positive mode data;
 
-\code{convert_files(rawFiles, outpath = NULL, args = c('peakPicking true 1-', 'polarity positive'))}
+\code{convert_files(rawFiles, outpath = NULL, msconvert_args = c('peakPicking true 1-', 'polarity positive'))}
 }
