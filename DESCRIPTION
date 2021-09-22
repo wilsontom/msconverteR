@@ -1,7 +1,7 @@
 Package: msconverteR
 Type: Package
 Title: Convert vendor specific mass spectrometry files to mzML
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: c(
     person("Tom", "Wilson", , "tpw2@aber.ac.uk", c("aut", "cre")))
 Description: Use the pwiz docker container to convert vendor specific mass spectrometry files to .mzML from within the R console on Linux systems.
