@@ -5,11 +5,11 @@
 #'
 #' For example to convert a file with vendor specific centroiding only;
 #'
-#' `convert_files(rawFiles, outpath = NULL, args = 'peakPicking true 1-')`
+#' `convert_files(rawFiles, outpath = NULL, msconvert_args = 'peakPicking true 1-')`
 #'
 #' To only retain positive mode data;
 #'
-#' `convert_files(rawFiles, outpath = NULL, args = c('peakPicking true 1-', 'polarity positive'))`
+#' `convert_files(rawFiles, outpath = NULL, msconvert_args = c('peakPicking true 1-', 'polarity positive'))`
 #'
 #'
 #' @param files the absolute filepath vendor specific files to be converted
