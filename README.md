@@ -1,6 +1,6 @@
 # msconverteR
 
- [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable) [![R build status](https://github.com/wilsontom/msconverteR/workflows/R-CMD-check/badge.svg)](https://github.com/wilsontom/msconverteR/actions) ![License](https://img.shields.io/badge/license-GNU%20GPL%20v3.0-blue.svg "GNU GPL v3.0")
+ [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable) [![R build status](https://github.com/wilsontom/msconverteR/workflows/R-CMD-check/badge.svg)](https://github.com/wilsontom/msconverteR/actions) [![codecov](https://codecov.io/gh/wilsontom/msconverteR/branch/master/graph/badge.svg?token=zTKqj1wFC9)](https://codecov.io/gh/wilsontom/msconverteR) ![License](https://img.shields.io/badge/license-GNU%20GPL%20v3.0-blue.svg "GNU GPL v3.0")
 
 ### Installation & Usage
 
