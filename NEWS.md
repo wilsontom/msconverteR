@@ -1,5 +1,8 @@
 # NEWS
 
+# 0.1.3
+* Pull docker image during package attach to make sure the most up-to-date image is being used
+
 # 0.1.2
 * Fix documentation errors
 
