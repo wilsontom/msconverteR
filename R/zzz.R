@@ -6,4 +6,6 @@
       packageStartupMessage(crayon::yellow('visit https://docs.docker.com/install for more details'))
     }
 
+  msconverteR::get_pwiz_container()
+
   }
