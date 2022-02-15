@@ -24,6 +24,7 @@ convert_files <-
            msconvert_args = c(),
            docker_args = c())
   {
+
     mount_point <- stringr::str_remove(files[1],
                                        paste0('/',
                                               basename(files[1])))

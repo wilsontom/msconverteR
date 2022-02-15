@@ -4,9 +4,10 @@
 #'
 #' @export
 
-get_pwiz_container <- function()
+get_container <- function()
 {
   docker_env <- stevedore::docker_client()
+
   docker_env$image$pull('chambm/pwiz-skyline-i-agree-to-the-vendor-licenses')
 
   return(invisible(NULL))
