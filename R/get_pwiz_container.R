@@ -6,7 +6,7 @@
 
 get_pwiz_container <- function()
 {
-  docker_env <- stevedore::docker_client()
+  docker_env <- .docker_client()
 
 
   image_list <- data.frame(docker_env$image$list())
