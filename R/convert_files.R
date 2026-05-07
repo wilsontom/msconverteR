@@ -87,7 +87,7 @@ convert_files <-
           paste0(DOCKER_CMD_A, '/data/',
                  basename(files[i]),
                  command_args)
-        system(DOCKER_RUN, intern = FALSE)
+        .run_system(DOCKER_RUN)
       }
     } else{
       for (i in seq_along(files)) {
@@ -97,7 +97,7 @@ convert_files <-
                  basename(files[i]),
                  command_args,
                  '  -o /outpath/')
-        system(DOCKER_RUN, intern = FALSE)
+        .run_system(DOCKER_RUN)
       }
     }
 
