@@ -27,4 +27,7 @@ For example to convert a file with vendor specific centroiding only;
 To only retain positive mode data;
 
 \code{convert_files(rawFiles, outpath = NULL, msconvert_args = c('peakPicking true 1-', 'polarity positive'))}
+
+When converting multiple files, all input files must be located in the same
+directory so they can be mounted into the container together.
 }
