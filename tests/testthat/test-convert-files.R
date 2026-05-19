@@ -18,6 +18,22 @@ test_that("convert_files rejects unsupported msconvert arguments", {
   )
 })
 
+test_that("convert_files rejects files from different input directories", {
+  input_dir_one <- withr::local_tempdir()
+  input_dir_two_root <- withr::local_tempdir()
+  input_dir_two <- file.path(input_dir_two_root, "second input dir")
+  dir.create(input_dir_two)
+  raw_files <- c(
+    local_raw_file(file.path(input_dir_one, "sample1.raw")),
+    local_raw_file(file.path(input_dir_two, "sample2.raw"))
+  )
+
+  expect_error(
+    convert_files(raw_files),
+    "All input files must be located in the same directory."
+  )
+})
+
 test_that("convert_files builds mzML command in the input directory by default", {
   input_dir_root <- withr::local_tempdir()
   input_dir <- file.path(input_dir_root, "input dir")
