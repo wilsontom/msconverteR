@@ -11,6 +11,8 @@
 #'
 #' `convert_files(rawFiles, outpath = NULL, msconvert_args = c('peakPicking true 1-', 'polarity positive'))`
 #'
+#' When converting multiple files, all input files must be located in the same
+#' directory so they can be mounted into the container together.
 #'
 #' @param files the absolute filepath vendor specific files to be converted
 #' @param outpath an optional filepath where `.mzML` files will be saved to. If `NULL` then `.mzML` files are saved to the same location as input files.
@@ -24,11 +26,17 @@ convert_files <-
            msconvert_args = c(),
            docker_args = c())
   {
-    mount_point <- stringr::str_remove(files[1],
-                                       paste0('/',
-                                              basename(files[1])))
+    files <- normalizePath(files)
+    input_dirs <- unique(dirname(files))
 
-    mount_point <- normalizePath(mount_point)
+    if (length(input_dirs) != 1) {
+      stop(
+        'All input files must be located in the same directory.',
+        call. = FALSE
+      )
+    }
+
+    mount_point <- input_dirs[[1]]
 
     if (is.null(outpath)) {
       mount_out <- mount_point
