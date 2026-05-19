@@ -1,6 +1,6 @@
 # msconverteR
 
- [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable) [![R-CMD-check.yaml](https://github.com/wilsontom/msconverteR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/wilsontom/msconverteR/actions/workflows/R-CMD-check.yaml) [![codecov](https://codecov.io/gh/wilsontom/msconverteR/branch/master/graph/badge.svg?token=zTKqj1wFC9)](https://codecov.io/gh/wilsontom/msconverteR) ![License](https://img.shields.io/badge/license-GNU%20GPL%20v3.0-blue.svg "GNU GPL v3.0") [![DOI](https://zenodo.org/badge/188437020.svg)](https://zenodo.org/badge/latestdoi/188437020)
+ [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable) [![R-CMD-check.yaml](https://github.com/wilsontom/msconverteR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/wilsontom/msconverteR/actions/workflows/R-CMD-check.yaml) [![Test coverage](https://raw.githubusercontent.com/wilsontom/msconverteR/coverage/badges/coverage.svg)](https://github.com/wilsontom/msconverteR/actions/workflows/test-coverage.yaml) ![License](https://img.shields.io/badge/license-GNU%20GPL%20v3.0-blue.svg "GNU GPL v3.0") [![DOI](https://zenodo.org/badge/188437020.svg)](https://zenodo.org/badge/latestdoi/188437020)
 
 
 
@@ -52,6 +52,5 @@ processing file: QC01.raw
 calculating source file checksums
 writing output file: .\QC1.mzML
 ```
-
 
 
