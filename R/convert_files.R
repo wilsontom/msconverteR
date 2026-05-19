@@ -36,21 +36,20 @@ convert_files <-
       mount_out <- normalizePath(outpath)
     }
 
-    docker_args <- paste(docker_args, collapse = ' ')
-    docker_run <-
-      paste('docker run --rm -e WINEDEBUG=-all', docker_args, '-v ')
-
-
-    DOCKER_CMD_A <-
-      paste0(
-        docker_run,
-        mount_point,
-        ':/data',
-        ' -v ',
-        mount_out,
-        ':/outpath ',
-        'chambm/pwiz-skyline-i-agree-to-the-vendor-licenses wine msconvert '
-      )
+    docker_base_args <- c(
+      'run',
+      '--rm',
+      '-e',
+      'WINEDEBUG=-all',
+      docker_args,
+      '-v',
+      paste0(mount_point, ':/data'),
+      '-v',
+      paste0(mount_out, ':/outpath'),
+      'chambm/pwiz-skyline-i-agree-to-the-vendor-licenses',
+      'wine',
+      'msconvert'
+    )
 
     if (length(msconvert_args) > 0) {
       ArgumentDictionary <- c(
@@ -70,34 +69,38 @@ convert_files <-
              call. = FALSE)
       }
 
-      command_args <- lapply(msconvert_args, function(x) {
-        paste0('--filter ', '"', x, '"')
-      })
+      command_args <- unlist(lapply(msconvert_args, function(x) {
+        c('--filter', x)
+      }))
     } else {
-      command_args <- list()
+      command_args <- character()
     }
 
 
     command_args <-
-      paste0(' --ignoreUnknownInstrumentError  --mzML ', do.call('paste', command_args))
+      c('--ignoreUnknownInstrumentError', '--mzML', command_args)
 
     if (is.null(outpath)) {
       for (i in seq_along(files)) {
-        DOCKER_RUN <-
-          paste0(DOCKER_CMD_A, '/data/',
-                 basename(files[i]),
-                 command_args)
-        .run_system(DOCKER_RUN)
+        docker_args_i <-
+          c(
+            docker_base_args,
+            paste0('/data/', basename(files[i])),
+            command_args
+          )
+        .run_system('docker', docker_args_i)
       }
     } else{
       for (i in seq_along(files)) {
-        DOCKER_RUN <-
-          paste0(DOCKER_CMD_A,
-                 '/data/',
-                 basename(files[i]),
-                 command_args,
-                 '  -o /outpath/')
-        .run_system(DOCKER_RUN)
+        docker_args_i <-
+          c(
+            docker_base_args,
+            paste0('/data/', basename(files[i])),
+            command_args,
+            '-o',
+            '/outpath/'
+          )
+        .run_system('docker', docker_args_i)
       }
     }
 

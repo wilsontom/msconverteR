@@ -6,6 +6,6 @@
   stevedore::docker_client()
 }
 
-.run_system <- function(command) {
-  system(command, intern = FALSE)
+.run_system <- function(command, args = character()) {
+  system2(command, args = shQuote(args))
 }

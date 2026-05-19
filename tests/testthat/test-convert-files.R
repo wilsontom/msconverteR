@@ -19,41 +19,61 @@ test_that("convert_files rejects unsupported msconvert arguments", {
 })
 
 test_that("convert_files builds mzML command in the input directory by default", {
-  input_dir <- withr::local_tempdir()
+  input_dir_root <- withr::local_tempdir()
+  input_dir <- file.path(input_dir_root, "input dir")
+  dir.create(input_dir)
   raw_file <- local_raw_file(file.path(input_dir, "sample.raw"))
-  commands <- character()
+  calls <- list()
 
   local_rebind(
     pkg_env(),
-    list(.run_system = function(command) {
-      commands <<- c(commands, command)
+    list(.run_system = function(command, args = character()) {
+      calls <<- c(calls, list(list(command = command, args = args)))
       0
     })
   )
 
   expect_invisible(convert_files(raw_file))
-  expect_length(commands, 1)
-  expect_true(grepl("docker run --rm -e WINEDEBUG=-all", commands[[1]], fixed = TRUE))
-  expect_true(grepl(paste0(normalizePath(input_dir), ":/data"), commands[[1]], fixed = TRUE))
-  expect_true(grepl(paste0(normalizePath(input_dir), ":/outpath"), commands[[1]], fixed = TRUE))
-  expect_true(grepl("/data/sample.raw", commands[[1]], fixed = TRUE))
-  expect_true(grepl("--ignoreUnknownInstrumentError  --mzML", commands[[1]], fixed = TRUE))
-  expect_false(grepl(" -o /outpath/", commands[[1]], fixed = TRUE))
+  expect_length(calls, 1)
+  expect_identical(calls[[1]]$command, "docker")
+  expect_identical(
+    calls[[1]]$args,
+    c(
+      "run",
+      "--rm",
+      "-e",
+      "WINEDEBUG=-all",
+      "-v",
+      paste0(normalizePath(input_dir), ":/data"),
+      "-v",
+      paste0(normalizePath(input_dir), ":/outpath"),
+      "chambm/pwiz-skyline-i-agree-to-the-vendor-licenses",
+      "wine",
+      "msconvert",
+      "/data/sample.raw",
+      "--ignoreUnknownInstrumentError",
+      "--mzML"
+    )
+  )
 })
 
 test_that("convert_files appends filters and outpath when requested", {
-  input_dir <- withr::local_tempdir()
-  out_dir <- withr::local_tempdir()
+  input_dir_root <- withr::local_tempdir()
+  input_dir <- file.path(input_dir_root, "input dir")
+  dir.create(input_dir)
+  out_dir_root <- withr::local_tempdir()
+  out_dir <- file.path(out_dir_root, "output dir")
+  dir.create(out_dir)
   raw_files <- c(
     local_raw_file(file.path(input_dir, "sample1.raw")),
     local_raw_file(file.path(input_dir, "sample2.raw"))
   )
-  commands <- character()
+  calls <- list()
 
   local_rebind(
     pkg_env(),
-    list(.run_system = function(command) {
-      commands <<- c(commands, command)
+    list(.run_system = function(command, args = character()) {
+      calls <<- c(calls, list(list(command = command, args = args)))
       0
     })
   )
@@ -67,11 +87,25 @@ test_that("convert_files appends filters and outpath when requested", {
     )
   )
 
-  expect_length(commands, 2)
-  expect_true(all(grepl(" --user 1000 -v ", commands, fixed = TRUE)))
-  expect_true(all(grepl(paste0(normalizePath(out_dir), ":/outpath"), commands, fixed = TRUE)))
-  expect_true(all(grepl('--filter "peakPicking true 1-" --filter "polarity positive"', commands, fixed = TRUE)))
-  expect_true(all(grepl(" -o /outpath/", commands, fixed = TRUE)))
-  expect_true(any(grepl("/data/sample1.raw", commands, fixed = TRUE)))
-  expect_true(any(grepl("/data/sample2.raw", commands, fixed = TRUE)))
+  expect_length(calls, 2)
+  expect_true(all(vapply(calls, function(call) identical(call$command, "docker"), logical(1))))
+  expect_true(all(vapply(calls, function(call) "--user" %in% call$args, logical(1))))
+  expect_true(all(vapply(calls, function(call) "1000" %in% call$args, logical(1))))
+  expect_true(all(vapply(
+    calls,
+    function(call) paste0(normalizePath(out_dir), ":/outpath") %in% call$args,
+    logical(1)
+  )))
+  expect_true(all(vapply(
+    calls,
+    function(call) identical(
+      call$args[match("--filter", call$args) + 0:3],
+      c("--filter", "peakPicking true 1-", "--filter", "polarity positive")
+    ),
+    logical(1)
+  )))
+  expect_true(all(vapply(calls, function(call) tail(call$args, 2)[[1]] == "-o", logical(1))))
+  expect_true(all(vapply(calls, function(call) tail(call$args, 1) == "/outpath/", logical(1))))
+  expect_true(any(vapply(calls, function(call) "/data/sample1.raw" %in% call$args, logical(1))))
+  expect_true(any(vapply(calls, function(call) "/data/sample2.raw" %in% call$args, logical(1))))
 })
