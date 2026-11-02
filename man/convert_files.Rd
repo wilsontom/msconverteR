@@ -2,7 +2,7 @@
 % Please edit documentation in R/convert_files.R
 \name{convert_files}
 \alias{convert_files}
-\title{Covert Files}
+\title{Convert Files}
 \usage{
 convert_files(files, outpath = NULL, msconvert_args = c(), docker_args = c())
 }
@@ -16,8 +16,8 @@ convert_files(files, outpath = NULL, msconvert_args = c(), docker_args = c())
 \item{docker_args}{additional arguments to pass to \verb{docker run}}
 }
 \description{
-Convert vendor specific mass spectrometry files to the open \code{.mzML} format. This functions makes a \code{system} call to \code{docker} in order to convert files.
-Conversion arguments should be supplied to the \code{args} parameter exactly as they would be for \code{msconvert} but omitting the \code{--filter} prefix.
+Convert vendor specific mass spectrometry files to the open \code{.mzML} format. This function calls \code{docker} to convert files.
+Conversion arguments should be supplied to the \code{msconvert_args} parameter exactly as they would be for \code{msconvert} but omitting the \code{--filter} prefix.
 }
 \details{
 For example to convert a file with vendor specific centroiding only;
