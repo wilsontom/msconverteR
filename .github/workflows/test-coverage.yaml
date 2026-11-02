@@ -4,8 +4,13 @@ on:
     branches: [main, master]
   pull_request:
     branches: [main, master]
+  workflow_dispatch:
 
 name: test-coverage
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test-coverage:
@@ -16,7 +21,7 @@ jobs:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -28,13 +33,6 @@ jobs:
         with:
           extra-packages: any::covr
           needs: coverage
-
-      - name: Install package
-        run: |
-          options(warn = 2)
-          pak::local_install_dev_deps(".", dependencies = TRUE)
-          pak::pkg_install(".", dependencies = TRUE)
-        shell: Rscript {0}
 
       - name: Test coverage
         run: |
@@ -66,7 +64,7 @@ jobs:
           COVERAGE_COLOR=$(cat coverage_color.txt)
 
           mkdir -p badges
-          curl -s "https://raw.githubusercontent.com/pachadotdev/ghacoveragebadge/refs/heads/main/badges/${COVERAGE_COLOR}.svg" > badges/coverage.svg
+          curl --fail --silent --show-error --location --retry 3 "https://raw.githubusercontent.com/pachadotdev/ghacoveragebadge/refs/heads/main/badges/${COVERAGE_COLOR}.svg" --output badges/coverage.svg
           sed -i "s/{{ COVERAGE }}/${COVERAGE}/g" badges/coverage.svg
 
       - name: Commit coverage badge
@@ -75,18 +73,23 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
 
-          cp badges/coverage.svg /tmp/coverage.svg
+          cp badges/coverage.svg "$RUNNER_TEMP/coverage.svg"
 
-          git checkout -B coverage
-          git rm -rf . || true
+          if git ls-remote --exit-code --heads origin coverage; then
+            git fetch origin coverage
+            git checkout -B coverage FETCH_HEAD
+          else
+            git checkout --orphan coverage
+          fi
+          git rm -rf .
 
           mkdir -p badges
-          cp /tmp/coverage.svg badges/coverage.svg
+          cp "$RUNNER_TEMP/coverage.svg" badges/coverage.svg
           git add badges/coverage.svg
 
           if ! git diff --staged --quiet; then
             git commit -m "Update coverage badge"
-            git push --force origin coverage
+            git push origin coverage
           else
             echo "No changes to commit"
           fi
