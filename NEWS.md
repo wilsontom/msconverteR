@@ -1,5 +1,10 @@
 # NEWS
 
+# Development version
+* Match the exact pwiz image tag, including when Docker has untagged images.
+* Correct conversion documentation and container availability messages.
+* Update maintenance workflows and exclude local build and coverage artefacts.
+
 # 0.1.2
 * Fix documentation errors
 
