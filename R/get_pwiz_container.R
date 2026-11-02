@@ -9,15 +9,11 @@ get_pwiz_container <- function()
   docker_env <- .docker_client()
 
 
-  image_list <- data.frame(docker_env$image$list())
+  image_list <- docker_env$image$list()
+  image_tags <- unlist(image_list$repo_tags, use.names = FALSE)
 
-
-  if (TRUE %in%
-      unlist(
-        lapply(
-          image_list$repo_tags,stringr::str_detect,
-          string = 'chambm/pwiz-skyline-i-agree-to-the-vendor-licenses:latest'))) {
-    message(crayon::green(clisymbols::symbol$tick, 'pwiz container avaialble'))
+  if ('chambm/pwiz-skyline-i-agree-to-the-vendor-licenses:latest' %in% image_tags) {
+    message(crayon::green(clisymbols::symbol$tick, 'pwiz container available'))
   } else{
     message(crayon::red(clisymbols::symbol$cross, 'pwiz container not available'))
     cat('\n')
