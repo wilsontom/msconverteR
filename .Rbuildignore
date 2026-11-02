@@ -3,3 +3,8 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.github$
+^AGENTS\.md$
+^.*\.Rcheck$
+^.*\.tar\.gz$
+^coverage_(percent|color)\.txt$
+^badges$
