@@ -1,4 +1,10 @@
+AGENTS.md
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
+*.Rcheck/
+*.tar.gz
+coverage_percent.txt
+coverage_color.txt
+badges/
