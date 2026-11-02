@@ -1,7 +1,7 @@
-#' Covert Files
+#' Convert Files
 #'
-#' Convert vendor specific mass spectrometry files to the open `.mzML` format. This functions makes a `system` call to `docker` in order to convert files.
-#' Conversion arguments should be supplied to the `args` parameter exactly as they would be for `msconvert` but omitting the `--filter` prefix.
+#' Convert vendor specific mass spectrometry files to the open `.mzML` format. This function calls `docker` to convert files.
+#' Conversion arguments should be supplied to the `msconvert_args` parameter exactly as they would be for `msconvert` but omitting the `--filter` prefix.
 #'
 #' For example to convert a file with vendor specific centroiding only;
 #'
